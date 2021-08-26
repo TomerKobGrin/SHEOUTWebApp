@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Amplify, {Api} from 'aws-amplify'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'
 import createStore from './Redux'
+import amplifyConfig from './aws-exports'
 
 const store = createStore()
+Amplify.configure(amplifyConfig)
 
 ReactDOM.render(
   <Provider store={store}>

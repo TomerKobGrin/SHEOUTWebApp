@@ -1,7 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux'
-
+import {createEpicMiddleware} from 'redux-observable'
+import rootEpic from '../Epics'
 // creates the store
-export default (rootReducer, rootSaga) => {
+export default (rootReducer, rootEpic) => {
   /* ------------- Redux Configuration ------------- */
 
   const middleware = []
@@ -10,8 +11,13 @@ export default (rootReducer, rootSaga) => {
 
   /* ------------- Epic Middlewares ------------- */
 
-  //const sagaMiddleware = createSagaMiddleware({})
-  //middleware.push(sagaMiddleware)
+  const epicMiddleware = createEpicMiddleware({
+    // dependencies: {
+    //   //history
+    // }
+  })
+
+  middleware.push(epicMiddleware)
 
   const enhancers = []
   enhancers.push(applyMiddleware(...middleware))
@@ -20,8 +26,8 @@ export default (rootReducer, rootSaga) => {
   const store = createStore(rootReducer, compose(...enhancers))
 
 
-  // kick off root saga
-  // sagaMiddleware.run(rootSaga)
+  // kick off root rootEpic
+  epicMiddleware.run(rootEpic)
 
   return {store}
 }

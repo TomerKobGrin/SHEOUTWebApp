@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-sheout-dev-140941-authRole",
+      "UnauthRoleArn": "arn:aws:iam::949815275750:role/amplify-sheout-dev-140941-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::949815275750:role/amplify-sheout-dev-140941-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-sheout-dev-140941-deployment",
+      "UnauthRoleName": "amplify-sheout-dev-140941-unauthRole",
+      "StackName": "amplify-sheout-dev-140941",
+      "StackId": "arn:aws:cloudformation:us-east-2:949815275750:stack/amplify-sheout-dev-140941/f4a4c320-0594-11ec-91d1-022e9465c428",
+      "AmplifyAppId": "dmvcbry0w3hao"
+    },
+    "categories": {
+      "auth": {
+        "sheout8c751b02": {}
+      }
+    }
+  }
+}

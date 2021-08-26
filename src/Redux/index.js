@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux'
 import configureStore from './CreateStore'
-
+import rootEpic from '../Epics'
 export default () => {
+
   /* ------------- Assemble The Reducers ------------- */
   const rootReducer = combineReducers({
     product: require('./ProductRedux').reducer,
 
   })
 
-  const {store} = configureStore(rootReducer) // call with root epic ?
-  
+  const {store} = configureStore(rootReducer,rootEpic) // call with root epic ?
   return store
 }
