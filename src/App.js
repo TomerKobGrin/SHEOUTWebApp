@@ -5,6 +5,7 @@ import React, { Fragment, useEffect } from 'react'
 import CustomAppBar from './Components/CustomAppBar'
 import { useDispatch, useSelector } from 'react-redux'
 import { ProductActions, ProductSelectors } from './Redux/ProductRedux'
+import ShoppingCartScreen from './Containers/ShoppingCartScreen'
 const App = () => {
   const dispatch = useDispatch()
   const items = useSelector(ProductSelectors.getItems)
@@ -20,9 +21,8 @@ const App = () => {
       <AmplifyAuthenticator>
         <Router>
           <Switch>
-            <Route path="/">
-              {items ? <HomeScreen /> : <div/>}
-            </Route>
+            <Route exact path="/" component={HomeScreen}/>
+            <Route exact path="/cart" component={ShoppingCartScreen}/>
           </Switch>
         </Router>
       </AmplifyAuthenticator>

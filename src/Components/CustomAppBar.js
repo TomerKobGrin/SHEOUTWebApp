@@ -3,11 +3,11 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Grid from '@material-ui/core/Grid'
 import Images from '../Themes/Images'
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined'
-import { Badge, Button } from '@material-ui/core'
+import { Badge, Button, Link } from '@material-ui/core'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import FacebookIcon from '@material-ui/icons/Facebook'
 import { ProductSelectors } from '../Redux/ProductRedux'
-import useStyles from './Styles/CustomAppBar'
+import useStyles from './Styles/CustomAppBarStyles'
 import { Fragment } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -21,22 +21,31 @@ const CustomAppBar = () => {
           <Grid container justifyContent="center" alignItems='center'>
             {renderLinks()}
             <Grid container justifyContent="center" item xs={4}>
-              <img className={classes.logo} src={Images.appLogo} />
+              <Link href="/">
+                  <img className={classes.logo} src={Images.appLogo} />
+              </Link>
             </Grid>
-            <Grid container justifyContent="flex-end" item xs={4}>
-              <Button>
-                <Badge showZero badgeContent={numberOfItemsInBag} color="secondary" >
-                  <ShoppingCartOutlinedIcon fontSize={"large"} />
-                </Badge>
-              </Button>
-            </Grid>
+            {renderShoppingCartButton(numberOfItemsInBag)}
           </Grid>
-
         </Toolbar>
       </AppBar>
-      <div className={classes.offset}/>
+      <div className={classes.offset} />
     </Fragment>
 
+  )
+}
+
+const renderShoppingCartButton = (numberOfItemsInBag) => {
+  return (
+    <Grid container justifyContent="flex-end" item xs={4}>
+      <Link href="/cart">
+        <Button>
+          <Badge showZero badgeContent={numberOfItemsInBag} color="secondary" >
+            <ShoppingCartOutlinedIcon fontSize={"large"} />
+          </Badge>
+        </Button>
+      </Link>
+    </Grid>
   )
 }
 

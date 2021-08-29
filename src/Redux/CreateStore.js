@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import {createEpicMiddleware} from 'redux-observable'
-import rootEpic from '../Epics'
+import localStorage from '../Services/localStorage'
 // creates the store
 export default (rootReducer, rootEpic) => {
   /* ------------- Redux Configuration ------------- */
@@ -8,8 +8,11 @@ export default (rootReducer, rootEpic) => {
   const middleware = []
 
 
+  
 
   /* ------------- Epic Middlewares ------------- */
+  
+  //const history = createBrowserHistory()
 
   const epicMiddleware = createEpicMiddleware({
     // dependencies: {
@@ -21,10 +24,8 @@ export default (rootReducer, rootEpic) => {
 
   const enhancers = []
   enhancers.push(applyMiddleware(...middleware))
-
-
-  const store = createStore(rootReducer, compose(...enhancers))
-
+  const store = createStore(rootReducer,localStorage.loadFromLocalStorage(),  compose(...enhancers))
+  store.subscribe(() => localStorage.saveToLocalStorage(store.getState()))
 
   // kick off root rootEpic
   epicMiddleware.run(rootEpic)

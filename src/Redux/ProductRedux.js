@@ -36,6 +36,14 @@ export const ProductSelectors = {
             numberOfItemsInBag = Object.values(itemsInBag).reduce((a,b) => {return {count: a.count + b.count}}).count
         }
         return numberOfItemsInBag
+    },
+    getOverallPrice: state => {
+        const itemsInBag = state.product.bag
+        let numberOfItemsInBag = 0
+        if (itemsInBag && Object.keys(itemsInBag).length > 0){
+            numberOfItemsInBag = Object.values(itemsInBag).map(item => item.count * item.price).reduce((a,b) => a +b)
+        }
+        return numberOfItemsInBag
     }
 }
 
@@ -50,7 +58,7 @@ const addProductToBag = (state, { item }) => {
     } else {
         updatedBag[item.title] = {...item, count: 1}
     }
-    return state.merge({bag: updatedBag, overallItemsInBag: state.overallItemsInBag + 1})
+    return state.merge({bag: updatedBag})
 }
 const fetchProducts = (state) => {
     return state.merge({error: null})
