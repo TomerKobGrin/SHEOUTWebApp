@@ -1,18 +1,16 @@
 import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles((theme) => ({
-  container: {
-    backgroundColor: '#282c34'
-  },
   image: {
     paddingTop: 10,
-    width: "90px",
-    height: "90px",
+    width: "140px",
+    height: "140px",
     objectFit: 'contain'
   },
   cardWrapper: {
-    width: "400px",
-    height: "270px",
-    justifyContent: 'center'
+    width: "300px",
+    height: "350px",
+    justifyContent: 'center',
+    background: 'transparent', boxShadow: 'none'
   },
   addToCartButton: {
     borderRadius: 16

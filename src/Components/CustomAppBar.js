@@ -7,33 +7,39 @@ import { Badge, Button } from '@material-ui/core'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import FacebookIcon from '@material-ui/icons/Facebook'
 import useStyles from './Styles/CustomAppBar'
+import { Fragment } from 'react'
+
 const CustomAppBar = () => {
   const classes = useStyles()
   return (
-    <AppBar position="static" className={classes.appBar}>
-      <Toolbar >
-        <Grid container justifyContent="center" alignItems='center'>
-          {renderLinks()}
-          <Grid container justifyContent="center" item xs={10}>
-            <img className={classes.logo} src={Images.appLogo} />
+    <Fragment>
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar >
+          <Grid container justifyContent="center" alignItems='center'>
+            {renderLinks()}
+            <Grid container justifyContent="center" item xs={4}>
+              <img className={classes.logo} src={Images.appLogo} />
+            </Grid>
+            <Grid container justifyContent="flex-end" item xs={4}>
+              <Button>
+                <Badge showZero badgeContent={0} color="secondary" >
+                  <ShoppingCartOutlinedIcon fontSize={"large"} />
+                </Badge>
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={1}>
-            <Button>
-              <Badge showZero badgeContent={0} color="secondary" >
-                <ShoppingCartOutlinedIcon fontSize={"large"} />
-              </Badge>
-            </Button>
-          </Grid>
-        </Grid>
 
-      </Toolbar>
-    </AppBar>
+        </Toolbar>
+      </AppBar>
+      <div className={classes.offset}/>
+    </Fragment>
+
   )
 }
 
 const renderLinks = () => {
   return (
-    <Grid container item xs={1} justifyContent="center" alignItems='center' >
+    <Grid container item xs={4} justifyContent="flex-start" alignItems='center' >
       {['facebook', 'twitter'].map(name => renderSingleLink(name))}
     </Grid>
   )

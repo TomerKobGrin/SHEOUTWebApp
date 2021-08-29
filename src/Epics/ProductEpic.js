@@ -10,7 +10,6 @@ export const fetchProducts = (action$) =>
         switchMap(() => from(fakeStoreApi.getFakeStoreData()).pipe(
             map(value => value.data),
             mergeMap((value) => {
-                debugger
                 return of(ProductActions.fetchProductsSuccess(value))
             }),
             catchError(error => of(ProductActions.fetchProductsFailure(error)))

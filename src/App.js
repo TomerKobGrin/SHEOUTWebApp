@@ -1,7 +1,7 @@
 import { AmplifyAuthenticator } from '@aws-amplify/ui-react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import HomeScreen from './Containers/HomeScreen'
-import { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import CustomAppBar from './Components/CustomAppBar'
 import { useDispatch, useSelector } from 'react-redux'
 import { ProductActions, ProductSelectors } from './Redux/ProductRedux'
@@ -9,13 +9,11 @@ const App = () => {
   const dispatch = useDispatch()
   const items = useSelector(ProductSelectors.getItems)
   useEffect(() => {
-    debugger
     if (!items) {
       dispatch(ProductActions.fetchProducts())
     }
   }, [])
   
-  debugger
   return (
     <Fragment>
       <CustomAppBar />
@@ -23,7 +21,7 @@ const App = () => {
         <Router>
           <Switch>
             <Route path="/">
-              <HomeScreen />
+              {items ? <HomeScreen /> : <div/>}
             </Route>
           </Switch>
         </Router>
