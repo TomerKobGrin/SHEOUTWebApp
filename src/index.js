@@ -10,6 +10,7 @@ import amplifyConfig from './aws-exports'
 const store = createStore()
 Amplify.configure(amplifyConfig)
 
+
 ReactDOM.render(
   <Provider store={store}>
     <App />

@@ -6,11 +6,14 @@ import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined'
 import { Badge, Button } from '@material-ui/core'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import FacebookIcon from '@material-ui/icons/Facebook'
+import { ProductSelectors } from '../Redux/ProductRedux'
 import useStyles from './Styles/CustomAppBar'
 import { Fragment } from 'react'
+import { useSelector } from 'react-redux'
 
 const CustomAppBar = () => {
   const classes = useStyles()
+  const numberOfItemsInBag = useSelector(ProductSelectors.getOverallItemsInBag)
   return (
     <Fragment>
       <AppBar position="fixed" className={classes.appBar}>
@@ -22,7 +25,7 @@ const CustomAppBar = () => {
             </Grid>
             <Grid container justifyContent="flex-end" item xs={4}>
               <Button>
-                <Badge showZero badgeContent={0} color="secondary" >
+                <Badge showZero badgeContent={numberOfItemsInBag} color="secondary" >
                   <ShoppingCartOutlinedIcon fontSize={"large"} />
                 </Badge>
               </Button>

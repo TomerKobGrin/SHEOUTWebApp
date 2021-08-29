@@ -28,13 +28,29 @@ export const INITIAL_STATE = Immutable({
 
 export const ProductSelectors = {
     getItems: state => state.product.items,
+    getUserBag: state =>  state.product.bag,
+    getOverallItemsInBag: state => {
+        const itemsInBag = state.product.bag
+        let numberOfItemsInBag = 0
+        if (itemsInBag && Object.keys(itemsInBag).length > 0){
+            numberOfItemsInBag = Object.values(itemsInBag).reduce((a,b) => {return {count: a.count + b.count}}).count
+        }
+        return numberOfItemsInBag
+    }
 }
 
 /* ------------- Reducers ------------- */
 
-const addProductToBag = (state, {item }) => {
-    debugger
-  return state.merge({})
+const addProductToBag = (state, { item }) => {
+    const currentBug = state.bag
+    let updatedBag = {...currentBug}
+    let bagItem = currentBug[item.title]
+    if (bagItem) {
+        updatedBag[item.title] = {...bagItem, count: bagItem.count + 1}
+    } else {
+        updatedBag[item.title] = {...item, count: 1}
+    }
+    return state.merge({bag: updatedBag, overallItemsInBag: state.overallItemsInBag + 1})
 }
 const fetchProducts = (state) => {
     return state.merge({error: null})
