@@ -1,16 +1,17 @@
 import useStyles from './Styles/SingleProductItemStyles'
-import { Grid, Card, CardMedia, CardContent, Typography, Button, Tooltip, withStyles, Snackbar } from '@material-ui/core'
+import { Grid, Card, CardMedia, CardContent, Typography, Button, Tooltip, Snackbar, ButtonGroup } from '@material-ui/core'
 import Rating from '@material-ui/lab/Rating'
 import { ProductActions } from '../Redux/ProductRedux'
 import { useDispatch } from 'react-redux'
 import { Fragment, useCallback, useState } from 'react'
 import { Alert } from '@material-ui/lab'
+import AddToCartWidget from './AddToCartWidget'
 
 const SingleProductItem = (props) => {
     const { item, index } = props
     const classes = useStyles()
     const dispatch = useDispatch()
-    const addProductToBag = useCallback(() => dispatch(ProductActions.addProductToBag(item)), [dispatch])
+    const addProductToBag = useCallback((amount) => dispatch(ProductActions.addProductToBag(item, amount)), [dispatch])
     const [isSnackBarOpen, setIsSnackBarOpen] = useState(false)
 
     const closeSnackBar = (event, reason) => {
@@ -46,19 +47,10 @@ const SingleProductItem = (props) => {
                             <Grid item>
                                 <Rating readOnly={true} precision={0.5} value={item.rating.rate} />
                             </Grid>
-                            <Grid item>
-                                <Button
-                                    onClick={() => {
-                                        addProductToBag()
-                                        setIsSnackBarOpen(true)
-                                    }}
-                                    className={classes.addToCartButton}
-                                    variant="contained"
-                                >
-                                    Add To Cart
-                                </Button>
-                            </Grid>
-
+                            <AddToCartWidget onAddToCartClick={(amount) => {
+                                 addProductToBag(amount)
+                                 setIsSnackBarOpen(true)
+                            }}/>
                         </Grid>
                     </CardContent>
                 </Card>
@@ -68,10 +60,11 @@ const SingleProductItem = (props) => {
                     {`${item.title} was added to your bag`}
                 </Alert>
             </Snackbar>
-        </Fragment>
+        </Fragment >
 
     )
 }
 
 
 export default SingleProductItem
+
