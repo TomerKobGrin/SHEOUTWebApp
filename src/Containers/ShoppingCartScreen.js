@@ -1,13 +1,16 @@
 import useStyles from './Styles/ShoppingCartScreenStyle'
 import { Button, Grid, Typography } from '@material-ui/core'
-import { useSelector } from 'react-redux'
-import { ProductSelectors } from '../Redux/ProductRedux.js'
+import { useDispatch, useSelector } from 'react-redux'
+import { ProductActions, ProductSelectors } from '../Redux/ProductRedux.js'
 import SingleProductInBag from '../Components/SingleProductInBag'
 import Images from '../Themes/Images'
+import { useCallback } from 'react'
 const ShoppingCartScreen = () => {
+    const dispatch = useDispatch()
     const classes = useStyles()
     const items = useSelector(ProductSelectors.getUserBag)
     const overallPrice = useSelector(ProductSelectors.getOverallPrice)
+    const submitOrder = useCallback(() => dispatch(ProductActions.submitOrder()), [dispatch])
     return (
         <Grid spacing={5} justifyContent='center' container >
             <Grid  spacing={3} direction='column' xs={6} container alignItems='center' justifyContent='flex-start' item>
@@ -22,7 +25,7 @@ const ShoppingCartScreen = () => {
                     </Typography>
                 </Grid>
                 <Grid item>
-                    <Button className={classes.submitButton} variant='contained' color='primary'>Submit your order</Button>
+                    <Button onClick={submitOrder} className={classes.submitButton} variant='contained' color='primary'>Submit your order</Button>
                 </Grid>
                 <Grid alignItems='center' justifyContent='center' container item>
                     <img className={classes.logoContainer} src={Images.customer} />

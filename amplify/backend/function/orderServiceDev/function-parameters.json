@@ -1,0 +1,10 @@
+{
+  "lambdaLayers": [],
+  "permissions": {
+    "auth": {
+      "sheout8c751b02": [
+        "read"
+      ]
+    }
+  }
+}

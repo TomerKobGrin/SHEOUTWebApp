@@ -10,7 +10,9 @@ const { Types, Creators } = createActions({
     fetchProductsFailure: ['error'],
     resetState: [],
     removeItemFromBag: ['itemTitle'],
-    lowerItemAmountInBag: ['itemTitle']
+    lowerItemAmountInBag: ['itemTitle'],
+    submitOrder: [],
+    submitOrderSucess:[]
 },
     { prefix: 'PRODUCT_' }
 )
@@ -92,6 +94,9 @@ const fetchProductsSuccess = (state, { items }) => {
 const fetchProductsFailure = (state, { error }) => {
     return state.merge({ error })
 }
+const submitOrderSucess = (state) => {
+    return state.merge({bag: {}})
+}
 
 const resetState = (state) => {
     return INITIAL_STATE
@@ -108,5 +113,6 @@ export const reducer = createReducer(INITIAL_STATE, {
     [Types.FETCH_PRODUCTS_FAILURE]: fetchProductsFailure,
     [Types.RESET_STATE]: resetState,
     [Types.REMOVE_ITEM_FROM_BAG]: removeItemFromBag,
-    [Types.LOWER_ITEM_AMOUNT_IN_BAG]: lowerItemAmountInBag
+    [Types.LOWER_ITEM_AMOUNT_IN_BAG]: lowerItemAmountInBag,
+    [Types.SUBMIT_ORDER_SUCESS]: submitOrderSucess
 })

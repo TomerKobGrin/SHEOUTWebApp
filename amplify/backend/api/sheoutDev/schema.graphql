@@ -1,0 +1,28 @@
+type Order 
+    @model 
+    @auth(rules: [{
+            allow: owner, 
+            ownerField: "owner"
+    }]) {
+    id: ID!
+    items: [OrderItem] @connection(keyName: "orderItemByOrderId" ,fields: ["id"])
+    owner_email: String!
+    owner: String!
+}
+
+type OrderItem 
+    @model 
+    @auth(rules: [{
+            allow: owner, 
+            ownerField: "owner"
+    }])
+    @key(name: "orderItemByOrderId", fields: ["order_id"]) {
+    id: ID!
+    order_id: ID!
+    item_id: ID!
+    owner: String!
+    title: String!
+    price: Float!
+    image: String!
+    count: Int!
+}
