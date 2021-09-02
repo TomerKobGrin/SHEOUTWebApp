@@ -18,7 +18,7 @@
       "function": {
         "orderServiceDev": {
           "deploymentBucketName": "amplify-sheout-dev-140941-deployment",
-          "s3Key": "amplify-builds/orderServiceDev-52726c394855432b5769-build.zip"
+          "s3Key": "amplify-builds/orderServiceDev-2f497152616f316b2b6c-build.zip"
         }
       }
     }

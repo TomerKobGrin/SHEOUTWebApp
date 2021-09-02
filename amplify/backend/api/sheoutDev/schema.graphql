@@ -3,6 +3,9 @@ type Order
     @auth(rules: [{
             allow: owner, 
             ownerField: "owner"
+    },{
+            allow: private, 
+            provider: iam
     }]) {
     id: ID!
     items: [OrderItem] @connection(keyName: "orderItemByOrderId" ,fields: ["id"])
@@ -15,6 +18,9 @@ type OrderItem
     @auth(rules: [{
             allow: owner, 
             ownerField: "owner"
+    }, {
+            allow: private, 
+            provider: iam
     }])
     @key(name: "orderItemByOrderId", fields: ["order_id"]) {
     id: ID!

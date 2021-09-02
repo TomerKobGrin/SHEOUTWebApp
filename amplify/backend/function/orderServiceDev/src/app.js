@@ -3,6 +3,13 @@
   API_SHEOUTDEV_GRAPHQLAPIIDOUTPUT
   AUTH_SHEOUT8C751B02_USERPOOLID
   ENV
+  FUNCTION_ORDERSERVICEDEV_NAME
+  REGION
+Amplify Params - DO NOT EDIT *//* Amplify Params - DO NOT EDIT
+  API_SHEOUTDEV_GRAPHQLAPIENDPOINTOUTPUT
+  API_SHEOUTDEV_GRAPHQLAPIIDOUTPUT
+  AUTH_SHEOUT8C751B02_USERPOOLID
+  ENV
   REGION
 Amplify Params - DO NOT EDIT *//* Amplify Params - DO NOT EDIT
   AUTH_SHEOUT8C751B02_USERPOOLID
@@ -27,6 +34,7 @@ const axios = require("axios")
 const urlParse = require("url").URL
 const https = require('https')
 const { createOrder, createOrderItem, updateOrder } = require('./graphqlApi')
+const GRAPHQL_OPERATIONS = require('./graphqlApiHandler')
 const graphqlUrl = process.env.API_SHEOUTDEV_GRAPHQLAPIENDPOINTOUTPUT
 const graphqlHost = new urlParse(graphqlUrl).hostname.toString()
 const region = process.env.REGION
@@ -69,42 +77,23 @@ app.post('/order', async function (req, res) {
     }
     const user = response.user
     const userName = user.Username
-    const userEmail = user.Attributes.filter(att => att.Name == "email")[0]
-
-    let qraphqlRequest = new AWS.HttpRequest(graphqlUrl, region)
-    qraphqlRequest.method = 'POST'
-    qraphqlRequest.headers.host = graphqlHost
-    qraphqlRequest.headers['Content-Type'] = 'multipart/form-data'
-    qraphqlRequest.body = JSON.stringify({
-      query: createOrderItem,
-      variables: {
-        input: {
-          owner: userName,
-          ownerEmail: userEmail
-        }
-      }
-    })
-    console.log(`request before signer ${JSON.stringify(qraphqlRequest)}`)
-    const signer = new AWS.Signers.V4(qraphqlRequest, 'appsync', true)
-    signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate())
-    // const createOrderResponse = await new Promise((resolve, reject) => {
-    //     const httpRequest = https.request({...qraphqlRequest, host: graphqlUrl}, (result =>))
-    // } 
-    const createOrderResponse = await axios({
-      method: 'POST', 
-      url: graphqlUrl, 
-      data: qraphqlRequest.body, 
-      header: qraphqlRequest.headers
-    })
+    const userEmail = user.Attributes.filter(att => att.Name == "email")[0].Value
+    const createOrderResponse = await GRAPHQL_OPERATIONS.CREATE_ORDER(userName, userEmail)
     console.log(`response ${JSON.stringify(createOrderResponse)}`)
+    const orderId = createOrderResponse.data.createOrder.id
+    await Promise.all(orderItems.map(item => GRAPHQL_OPERATIONS.CREATE_ORDER_ITEM(
+      orderId, item.id, userName, item.title, item.price, item.count, item.image
+    )))
+    
     res.status(200).send('order has been placed')
   } catch (e) {
-    console.log(e.stack)
+    console.log(e)
     res.status(500).send('internal error')
   }
 
 
 })
+
 
 app.listen(3000, function () {
   console.log("App started")
