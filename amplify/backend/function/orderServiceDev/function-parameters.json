@@ -3,7 +3,14 @@
   "permissions": {
     "auth": {
       "sheout8c751b02": [
-        "read"
+        "create",
+        "read",
+        "update"
+      ]
+    },
+    "api": {
+      "sheoutDev": [
+        "Mutation"
       ]
     }
   }

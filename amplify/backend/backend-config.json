@@ -50,6 +50,14 @@
           "attributes": [
             "UserPoolId"
           ]
+        },
+        {
+          "category": "api",
+          "resourceName": "sheoutDev",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
         }
       ]
     }

@@ -1,4 +1,10 @@
 /* Amplify Params - DO NOT EDIT
+  API_SHEOUTDEV_GRAPHQLAPIENDPOINTOUTPUT
+  API_SHEOUTDEV_GRAPHQLAPIIDOUTPUT
+  AUTH_SHEOUT8C751B02_USERPOOLID
+  ENV
+  REGION
+Amplify Params - DO NOT EDIT *//* Amplify Params - DO NOT EDIT
   AUTH_SHEOUT8C751B02_USERPOOLID
   ENV
   REGION
@@ -17,7 +23,13 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 var AWS = require("aws-sdk")
-
+const axios = require("axios")
+const urlParse = require("url").URL
+const https = require('https')
+const { createOrder, createOrderItem, updateOrder } = require('./graphqlApi')
+const graphqlUrl = process.env.API_SHEOUTDEV_GRAPHQLAPIENDPOINTOUTPUT
+const graphqlHost = new urlParse(graphqlUrl).hostname.toString()
+const region = process.env.REGION
 // declare a new express app
 var app = express()
 app.use(bodyParser.json())
@@ -36,12 +48,12 @@ app.use(function (req, res, next) {
  **********************/
 
 app.post('/order', async function (req, res) {
-  const { sub } = req.headers
-  const orderItems =  (req.body && req.body.orderItems) ? req.body.orderItems : undefined 
-  if (!orderItems) {
-    res.status(400).send('no items in order')
-  }
   try {
+    const { sub } = req.headers
+    const orderItems = (req.body && req.body.orderItems && req.body.orderItems.length > 0) ? req.body.orderItems : undefined
+    if (!orderItems) {
+      res.status(400).send('no items in order')
+    }
     const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({ apiVersion: '2016-04-18' })
     const adminGetUserRequest = cognitoidentityserviceprovider.listUsers({
       UserPoolId: 'us-east-2_428mDcETm',
@@ -58,11 +70,39 @@ app.post('/order', async function (req, res) {
     const user = response.user
     const userName = user.Username
     const userEmail = user.Attributes.filter(att => att.Name == "email")[0]
+
+    let qraphqlRequest = new AWS.HttpRequest(graphqlUrl, region)
+    qraphqlRequest.method = 'POST'
+    qraphqlRequest.headers.host = graphqlHost
+    qraphqlRequest.headers['Content-Type'] = 'multipart/form-data'
+    qraphqlRequest.body = JSON.stringify({
+      query: createOrderItem,
+      variables: {
+        input: {
+          owner: userName,
+          ownerEmail: userEmail
+        }
+      }
+    })
+    console.log(`request before signer ${JSON.stringify(qraphqlRequest)}`)
+    const signer = new AWS.Signers.V4(qraphqlRequest, 'appsync', true)
+    signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate())
+    // const createOrderResponse = await new Promise((resolve, reject) => {
+    //     const httpRequest = https.request({...qraphqlRequest, host: graphqlUrl}, (result =>))
+    // } 
+    const createOrderResponse = await axios({
+      method: 'POST', 
+      url: graphqlUrl, 
+      data: qraphqlRequest.body, 
+      header: qraphqlRequest.headers
+    })
+    console.log(`response ${JSON.stringify(createOrderResponse)}`)
     res.status(200).send('order has been placed')
   } catch (e) {
-    console.log("error: " + e.message)
+    console.log(e.stack)
+    res.status(500).send('internal error')
   }
-  // Add your code here
+
 
 })
 
