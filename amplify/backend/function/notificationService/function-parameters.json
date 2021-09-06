@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "analytics": {
+      "sheoutDev": [
+        "create",
+        "read"
+      ]
+    },
+    "storage": {
+      "Order:@model(appsync)": [
+        "read"
+      ],
+      "OrderItem:@model(appsync)": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

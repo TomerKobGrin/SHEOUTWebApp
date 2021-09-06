@@ -18,7 +18,18 @@
       "function": {
         "orderServiceDev": {
           "deploymentBucketName": "amplify-sheout-dev-140941-deployment",
-          "s3Key": "amplify-builds/orderServiceDev-2f497152616f316b2b6c-build.zip"
+          "s3Key": "amplify-builds/orderServiceDev-614b6d414d7670503479-build.zip"
+        },
+        "notificationService": {
+          "deploymentBucketName": "amplify-sheout-dev-140941-deployment",
+          "s3Key": "amplify-builds/notificationService-37417447766530464632-build.zip"
+        }
+      },
+      "notifications": {
+        "Pinpoint": {
+          "Name": "sheoutDev-dev",
+          "Id": "4b04c66c601d4dacb6160561bd2cb756",
+          "Region": "us-east-1"
         }
       }
     }

@@ -38,6 +38,7 @@ const GRAPHQL_OPERATIONS = require('./graphqlApiHandler')
 const graphqlUrl = process.env.API_SHEOUTDEV_GRAPHQLAPIENDPOINTOUTPUT
 const graphqlHost = new urlParse(graphqlUrl).hostname.toString()
 const region = process.env.REGION
+const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({ apiVersion: '2016-04-18' })
 // declare a new express app
 var app = express()
 app.use(bodyParser.json())
@@ -62,7 +63,7 @@ app.post('/order', async function (req, res) {
     if (!orderItems) {
       res.status(400).send('no items in order')
     }
-    const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({ apiVersion: '2016-04-18' })
+    
     const adminGetUserRequest = cognitoidentityserviceprovider.listUsers({
       UserPoolId: 'us-east-2_428mDcETm',
       "Filter": `sub = \"${sub}\"`,

@@ -64,6 +64,42 @@
           ]
         }
       ]
+    },
+    "notificationService": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "analytics",
+          "resourceName": "sheoutDev",
+          "attributes": [
+            "Id",
+            "Region"
+          ]
+        },
+        {
+          "category": "api",
+          "resourceName": "sheoutDev",
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ]
+        }
+      ]
+    }
+  },
+  "notifications": {
+    "sheoutDev": {
+      "service": "Pinpoint",
+      "channels": [
+        "Email"
+      ]
+    }
+  },
+  "analytics": {
+    "sheoutDev": {
+      "service": "Pinpoint",
+      "providerPlugin": "awscloudformation"
     }
   }
 }

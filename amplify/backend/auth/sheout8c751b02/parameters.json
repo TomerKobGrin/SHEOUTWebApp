@@ -1,6 +1,6 @@
 {
     "identityPoolName": "sheout8c751b02_identitypool_8c751b02",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "sheout8c751b02",
     "userPoolName": "sheout8c751b02_userpool_8c751b02",
     "autoVerifiedAttributes": [
