@@ -8,9 +8,9 @@ const region = process.env.REGION
 
 const GRAPHQL_OPERATIONS = {
     CREATE_ORDER: async (owner, owner_email) =>
-        proccessGraphqlRequest({ owner, owner_email }, createOrder),
+        proccessGraphqlRequest({ owner, owner_email, notification_sent: false }, createOrder),
     CREATE_ORDER_ITEM: async (order_id, item_id, owner, title, price, count, image) =>
-        proccessGraphqlRequest({ order_id, item_id, owner, title, price, count, image }, createOrderItem)
+        proccessGraphqlRequest({ order_id, item_id, owner, title, price, count, image,  }, createOrderItem)
 }
 
 const proccessGraphqlRequest = async (input, query) => {

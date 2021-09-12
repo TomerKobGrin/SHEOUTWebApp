@@ -2,7 +2,9 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles((theme) => ({
     submitButton: {
         borderRadius: 16, 
-        marginBottom: 40
+        marginBottom: 40,
+        width: 190,
+        height: 38
     },
     logoContainer: {
        paddingLeft:40, 

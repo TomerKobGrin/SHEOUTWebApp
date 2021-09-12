@@ -12,7 +12,9 @@ const { Types, Creators } = createActions({
     removeItemFromBag: ['itemTitle'],
     lowerItemAmountInBag: ['itemTitle'],
     submitOrder: [],
-    submitOrderSucess:[]
+    submitOrderSucess: [],
+    submitOrderFailure: [],
+    resetBag: []
 },
     { prefix: 'PRODUCT_' }
 )
@@ -26,7 +28,8 @@ export default Creators
 export const INITIAL_STATE = Immutable({
     items: null,
     bag: {},
-    fetchItemsError: null
+    fetchItemsError: null,
+    isUploadingOrder: false
 })
 
 /* ------------- Selectors ------------- */
@@ -49,7 +52,8 @@ export const ProductSelectors = {
             numberOfItemsInBag = Object.values(itemsInBag).map(item => item.count * item.price).reduce((a, b) => a + b)
         }
         return numberOfItemsInBag
-    }
+    },
+    getIsUploadingOrder: state => state.product.isUploadingOrder
 }
 
 /* ------------- Reducers ------------- */
@@ -94,12 +98,24 @@ const fetchProductsSuccess = (state, { items }) => {
 const fetchProductsFailure = (state, { error }) => {
     return state.merge({ error })
 }
+const submitOrder = (state) => {
+    return state.merge({isUploadingOrder: true,})
+}
+
 const submitOrderSucess = (state) => {
-    return state.merge({bag: {}})
+    return state.merge({bag: {}, isUploadingOrder: false})
+}
+
+const submitOrderFailure = (state) => {
+    return state.merge({isUploadingOrder: false})
 }
 
 const resetState = (state) => {
     return INITIAL_STATE
+}
+
+const resetBag = (state) => {
+    return state.merge({bag: {}, isUploadingOrder: false})
 }
 
 
@@ -112,7 +128,10 @@ export const reducer = createReducer(INITIAL_STATE, {
     [Types.FETCH_PRODUCTS_SUCCESS]: fetchProductsSuccess,
     [Types.FETCH_PRODUCTS_FAILURE]: fetchProductsFailure,
     [Types.RESET_STATE]: resetState,
+    [Types.RESET_BAG]: resetBag,
     [Types.REMOVE_ITEM_FROM_BAG]: removeItemFromBag,
     [Types.LOWER_ITEM_AMOUNT_IN_BAG]: lowerItemAmountInBag,
-    [Types.SUBMIT_ORDER_SUCESS]: submitOrderSucess
+    [Types.SUBMIT_ORDER]: submitOrder,
+    [Types.SUBMIT_ORDER_SUCESS]: submitOrderSucess,
+    [Types.SUBMIT_ORDER_FAILURE]: submitOrderFailure
 })

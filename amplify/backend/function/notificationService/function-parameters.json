@@ -1,14 +1,29 @@
 {
   "permissions": {
+    "auth": {
+      "sheout8c751b02": [
+        "create",
+        "read",
+        "update"
+      ]
+    },
+    "api": {
+      "sheoutDev": [
+        "Mutation"
+      ]
+    },
     "analytics": {
       "sheoutDev": [
         "create",
-        "read"
+        "read",
+        "update"
       ]
     },
     "storage": {
       "Order:@model(appsync)": [
-        "read"
+        "create",
+        "read",
+        "update"
       ],
       "OrderItem:@model(appsync)": [
         "read"

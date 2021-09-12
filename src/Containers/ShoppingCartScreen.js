@@ -1,5 +1,5 @@
 import useStyles from './Styles/ShoppingCartScreenStyle'
-import { Button, Grid, Typography } from '@material-ui/core'
+import { Button, CircularProgress, Grid, Typography } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { ProductActions, ProductSelectors } from '../Redux/ProductRedux.js'
 import SingleProductInBag from '../Components/SingleProductInBag'
@@ -11,9 +11,10 @@ const ShoppingCartScreen = () => {
     const items = useSelector(ProductSelectors.getUserBag)
     const overallPrice = useSelector(ProductSelectors.getOverallPrice)
     const submitOrder = useCallback(() => dispatch(ProductActions.submitOrder()), [dispatch])
+    const isUploadingOrder = useSelector(ProductSelectors.getIsUploadingOrder)
     return (
         <Grid spacing={5} justifyContent='center' container >
-            <Grid  spacing={3} direction='column' xs={6} container alignItems='center' justifyContent='flex-start' item>
+            <Grid spacing={3} direction='column' xs={6} container alignItems='center' justifyContent='flex-start' item>
                 <Grid item>
                     <Typography variant={'h4'} >
                         {`Checkout`}
@@ -25,7 +26,9 @@ const ShoppingCartScreen = () => {
                     </Typography>
                 </Grid>
                 <Grid item>
-                    <Button onClick={submitOrder} className={classes.submitButton} variant='contained' color='primary'>Submit your order</Button>
+                    <Button disabled={isUploadingOrder} onClick={submitOrder} className={classes.submitButton} variant='contained' color='primary'>
+                        {isUploadingOrder ? <CircularProgress size={20}/> : 'Submit your order'}
+                    </Button>
                 </Grid>
                 <Grid alignItems='center' justifyContent='center' container item>
                     <img className={classes.logoContainer} src={Images.customer} />

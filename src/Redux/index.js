@@ -6,7 +6,7 @@ export default () => {
   /* ------------- Assemble The Reducers ------------- */
   const rootReducer = combineReducers({
     product: require('./ProductRedux').reducer,
-
+    orders: require('./OrdersRedux').reducer,
   })
 
   const {store} = configureStore(rootReducer,rootEpic) // call with root epic ?

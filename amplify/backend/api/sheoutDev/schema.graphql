@@ -8,6 +8,7 @@ type Order
             provider: iam
     }]) {
     id: ID!
+    notification_sent: Boolean
     items: [OrderItem] @connection(keyName: "orderItemByOrderId" ,fields: ["id"])
     owner_email: String!
     owner: String!

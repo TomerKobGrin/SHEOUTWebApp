@@ -18,11 +18,11 @@
       "function": {
         "orderServiceDev": {
           "deploymentBucketName": "amplify-sheout-dev-140941-deployment",
-          "s3Key": "amplify-builds/orderServiceDev-614b6d414d7670503479-build.zip"
+          "s3Key": "amplify-builds/orderServiceDev-63534349737a4c6a7877-build.zip"
         },
         "notificationService": {
           "deploymentBucketName": "amplify-sheout-dev-140941-deployment",
-          "s3Key": "amplify-builds/notificationService-37417447766530464632-build.zip"
+          "s3Key": "amplify-builds/notificationService-7a70515954566a643864-build.zip"
         }
       },
       "notifications": {

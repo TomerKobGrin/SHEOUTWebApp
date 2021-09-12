@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'row',
     },
     offset: {
-      marginTop: 100
+      marginTop: '12vh'
     }
 }))
 

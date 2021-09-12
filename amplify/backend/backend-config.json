@@ -71,18 +71,26 @@
       "service": "Lambda",
       "dependsOn": [
         {
-          "category": "analytics",
-          "resourceName": "sheoutDev",
+          "category": "auth",
+          "resourceName": "sheout8c751b02",
           "attributes": [
-            "Id",
-            "Region"
+            "UserPoolId"
           ]
         },
         {
           "category": "api",
           "resourceName": "sheoutDev",
           "attributes": [
-            "GraphQLAPIIdOutput"
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        },
+        {
+          "category": "analytics",
+          "resourceName": "sheoutDev",
+          "attributes": [
+            "Id",
+            "Region"
           ]
         }
       ]

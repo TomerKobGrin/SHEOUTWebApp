@@ -3,6 +3,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Grid from '@material-ui/core/Grid'
 import Images from '../Themes/Images'
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined'
+import ListAltIcon from '@material-ui/icons/ListAlt'
 import { Badge, Button, Link } from '@material-ui/core'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import FacebookIcon from '@material-ui/icons/Facebook'
@@ -22,7 +23,7 @@ const CustomAppBar = () => {
             {renderLinks()}
             <Grid container justifyContent="center" item xs={4}>
               <Link href="/">
-                  <img className={classes.logo} src={Images.appLogo} />
+                <img className={classes.logo} src={Images.appLogo} />
               </Link>
             </Grid>
             {renderShoppingCartButton(numberOfItemsInBag)}
@@ -36,13 +37,19 @@ const CustomAppBar = () => {
 }
 
 const renderShoppingCartButton = (numberOfItemsInBag) => {
+  const disabled = !numberOfItemsInBag || numberOfItemsInBag === 0
   return (
     <Grid container justifyContent="flex-end" item xs={4}>
-      <Link href="/cart">
-        <Button>
+      <Link {...(disabled ? {} : { href: "/cart" })}>
+        <Button disabled={disabled} >
           <Badge showZero badgeContent={numberOfItemsInBag} color="secondary" >
             <ShoppingCartOutlinedIcon fontSize={"large"} />
           </Badge>
+        </Button>
+      </Link>
+      <Link href="/orders">
+        <Button>
+            <ListAltIcon fontSize={"large"} />
         </Button>
       </Link>
     </Grid>

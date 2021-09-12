@@ -3,6 +3,7 @@ import { ofType } from 'redux-observable'
 import ProductActions, { ProductSelectors, ProductTypes } from '../Redux/ProductRedux'
 import { catchError, mergeMap, of, pluck, switchMap, from, map } from 'rxjs'
 import fakeStoreApi from '../Services/fakeStoreApi'
+
 export const fetchProducts = (action$) =>
     action$.pipe(
         ofType(ProductTypes.FETCH_PRODUCTS),
@@ -26,7 +27,7 @@ export const submitOrder = (action$, state$) =>
                     mergeMap((data) =>
                         of(ProductActions.submitOrderSucess())
                     ),
-                    catchError(error => { debugger})
+                    catchError(error => of(ProductActions.submitOrderFailure()))
                 )
             )
         })
