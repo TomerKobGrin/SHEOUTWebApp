@@ -15,7 +15,6 @@ export const fetchOrders = (action$) =>
                     ...value, createdAt: new Date(value.createdAt).toLocaleString()
                 })).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))),
             mergeMap((value) => {
-                debugger
                 return of(OrdersActions.fetchOrdersSuccess(value))
             }),
             catchError(error => { debugger })

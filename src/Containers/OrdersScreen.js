@@ -17,7 +17,6 @@ const OrdersScreen = () => {
     const dispatch = useDispatch()
     const classes = useStyles()
     const orders = useSelector(OrdersSelectors.getOrders)
-    debugger
     useEffect(() => {
         dispatch(OrdersActions.fetchOrders())
     }, [])
@@ -30,7 +29,6 @@ const OrdersScreen = () => {
 }
 
 const renderSingleItem = (item, classes) => {
-    debugger
     return (
         <Accordion>
             <AccordionSummary

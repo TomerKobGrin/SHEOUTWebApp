@@ -4,15 +4,18 @@ import Grid from '@material-ui/core/Grid'
 import Images from '../Themes/Images'
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined'
 import ListAltIcon from '@material-ui/icons/ListAlt'
-import { Badge, Button, Link } from '@material-ui/core'
+import { Badge, Button } from '@material-ui/core'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import FacebookIcon from '@material-ui/icons/Facebook'
 import { ProductSelectors } from '../Redux/ProductRedux'
 import useStyles from './Styles/CustomAppBarStyles'
 import { Fragment } from 'react'
 import { useSelector } from 'react-redux'
+import {  useHistory, Link } from 'react-router-dom'
 
 const CustomAppBar = () => {
+  let history = useHistory()
+  debugger
   const classes = useStyles()
   const numberOfItemsInBag = useSelector(ProductSelectors.getOverallItemsInBag)
   return (
@@ -22,9 +25,9 @@ const CustomAppBar = () => {
           <Grid container justifyContent="center" alignItems='center'>
             {renderLinks()}
             <Grid container justifyContent="center" item xs={4}>
-              <Link href="/">
+              <Button onClick={() => history.push("/")}>
                 <img className={classes.logo} src={Images.appLogo} />
-              </Link>
+              </Button>
             </Grid>
             {renderShoppingCartButton(numberOfItemsInBag)}
           </Grid>
@@ -40,14 +43,14 @@ const renderShoppingCartButton = (numberOfItemsInBag) => {
   const disabled = !numberOfItemsInBag || numberOfItemsInBag === 0
   return (
     <Grid container justifyContent="flex-end" item xs={4}>
-      <Link {...(disabled ? {} : { href: "/cart" })}>
+      <Link {...(disabled ? {} : { to: "/cart" })}>
         <Button disabled={disabled} >
           <Badge showZero badgeContent={numberOfItemsInBag} color="secondary" >
             <ShoppingCartOutlinedIcon fontSize={"large"} />
           </Badge>
         </Button>
       </Link>
-      <Link href="/orders">
+      <Link to="/orders">
         <Button>
             <ListAltIcon fontSize={"large"} />
         </Button>

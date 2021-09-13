@@ -6,9 +6,15 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'
 import createStore from './Redux'
 import amplifyConfig from './aws-exports'
+import { AWSIoTProvider } from "@aws-amplify/pubsub/lib/Providers"
 
 const store = createStore()
+
 Amplify.configure(amplifyConfig)
+Amplify.addPluggable(new AWSIoTProvider({
+  aws_pubsub_region: 'us-east-2',
+  aws_pubsub_endpoint: `wss://a4rd0syc6m02r-ats.iot.us-east-2.amazonaws.com/mqtt`,
+}))
 
 
 ReactDOM.render(

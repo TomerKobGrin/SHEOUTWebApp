@@ -98,6 +98,8 @@ app.post('/order', async function (req, res) {
     res.status(500).send('internal error')
   }
 
+  console.log('log after response')
+
 
 })
 

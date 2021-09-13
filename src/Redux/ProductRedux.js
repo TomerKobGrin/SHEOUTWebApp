@@ -73,7 +73,6 @@ const lowerItemAmountInBag = (state, { itemTitle }) => {
     const currentBag = state.bag
     const bagItem = currentBag[itemTitle]
     let updatedBag = { ...currentBag }
-    debugger
     if (bagItem.count == 1) {
         delete updatedBag[itemTitle]
     } else {

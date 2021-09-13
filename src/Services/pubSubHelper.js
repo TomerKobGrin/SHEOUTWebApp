@@ -1,15 +1,22 @@
-import { PubSub } from 'aws-amplify'
-import { AWSAppSyncProvider } from "@aws-amplify/pubsub/lib/Providers";
+import Amplify, { Auth, PubSub } from 'aws-amplify'
+import { AWSAppSyncProvider, AWSIoTProvider } from "@aws-amplify/pubsub/lib/Providers"
 
 let pubsubInstance = null
+let REACT_APP_MQTT_ID = '<mqtt_id>'
+debugger
 
-const subscribe = (userId, userEmail) => {
+const subscribe = async (userId, userEmail, onMessage) => {
     debugger
     try {
         unsubscribe()
-        pubsubInstance = PubSub.subscribe([`${userId}_orders`, `${userEmail}_orders`]).subscribe({
+        const userCreds = await Auth.currentCredentials()
+        const userIdentityId = userCreds.identityId
+        debugger
+        
+        pubsubInstance = PubSub.subscribe(`orderNotif`).subscribe({
             next: data => {
                 debugger
+                onMessage(data.value.message)
             },
             error: error => {
                 debugger
@@ -18,6 +25,7 @@ const subscribe = (userId, userEmail) => {
                 debugger
             },
         })
+        debugger
     } catch (e) {
         debugger
         console.log(e.stack)
@@ -25,6 +33,7 @@ const subscribe = (userId, userEmail) => {
 }
 
 const unsubscribe = () => {
+    console.log("unsubscribed", pubsubInstance)
     if (pubsubInstance) {
         pubsubInstance.unsubscribe()
         pubsubInstance = null

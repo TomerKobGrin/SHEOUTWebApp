@@ -5,13 +5,18 @@ import { ProductActions, ProductSelectors } from '../Redux/ProductRedux.js'
 import SingleProductInBag from '../Components/SingleProductInBag'
 import Images from '../Themes/Images'
 import { useCallback } from 'react'
+import { useHistory } from 'react-router-dom'
 const ShoppingCartScreen = () => {
+    const history = useHistory()
     const dispatch = useDispatch()
     const classes = useStyles()
     const items = useSelector(ProductSelectors.getUserBag)
     const overallPrice = useSelector(ProductSelectors.getOverallPrice)
     const submitOrder = useCallback(() => dispatch(ProductActions.submitOrder()), [dispatch])
     const isUploadingOrder = useSelector(ProductSelectors.getIsUploadingOrder)
+    if (!items || Object.values(items).length == 0) {
+        history.push('/orders')
+    }
     return (
         <Grid spacing={5} justifyContent='center' container >
             <Grid spacing={3} direction='column' xs={6} container alignItems='center' justifyContent='flex-start' item>
