@@ -15,7 +15,6 @@ import {  useHistory, Link } from 'react-router-dom'
 
 const CustomAppBar = () => {
   let history = useHistory()
-  debugger
   const classes = useStyles()
   const numberOfItemsInBag = useSelector(ProductSelectors.getOverallItemsInBag)
   return (

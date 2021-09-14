@@ -1,6 +1,5 @@
 import useStyles from './Styles/SingleProductItemStyles'
 import { Grid, Typography, Button, ButtonGroup } from '@material-ui/core'
-import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import CounterWidget from './CounterWidget'
 
